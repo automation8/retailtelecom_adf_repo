@@ -227,7 +227,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "INSERT INTO ctrl.audit_log (adf_run_id, table_id, status, stage, start_time)\nVALUES('a1', @{item().table_id}, 'IN_PROGRESS','SOURCE_TO_SILVER', sysutcdatetime())",
+								"value": "UPDATE ctrl.audit_log\nSET status='SUCCESS', end_time=sysutcdatetime(), records_written=@{activity('Bronze to Silver').output.runOutput}\nWHERE adf_run_id='@{pipeline().parameters.adf_run_id}' AND table_id=@{pipeline().parameters.table_id}",
 								"type": "Expression"
 							}
 						}
